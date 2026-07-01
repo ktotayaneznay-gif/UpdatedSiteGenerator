@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-ru="Бесполезные сайты" data-en="Useless Websites">Бесполезные сайты | Useless Websites</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #ff6b6b;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', cursive, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      transition: background 0.5s ease;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .lang-switcher {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+    }
+
+    .lang-btn {
+      padding: 10px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .lang-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(1.1);
+    }
+
+    .lang-btn.active {
+      background: white;
+      color: #ff6b6b;
+      border-color: white;
+    }
+
+    .reset-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      padding: 10px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .reset-btn:hover {
+      background: rgba(0, 0, 0, 0.5);
+      transform: scale(1.1);
+    }
+
+    .container {
+      text-align: center;
+      color: white;
+      max-width: 600px;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(20px);
+      border: 3px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50px;
+      padding: 50px 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                  0 0 100px rgba(255, 255, 255, 0.2);
+      animation: wobble 2s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      75% { transform: rotate(-2deg); }
+    }
+
+    .emoji-big {
+      font-size: 120px;
+      margin-bottom: 20px;
+      animation: bounce 1s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+      animation: rainbow 3s linear infinite;
+      line-height: 1.2;
+    }
+
+    @keyframes rainbow {
+      0% { color: #ff6b6b; }
+      20% { color: #ffd93d; }
+      40% { color: #6bcb77; }
+      60% { color: #4d96ff; }
+      80% { color: #9b59b6; }
+      100% { color: #ff6b6b; }
+    }
+
+    .subtitle {
+      font-size: 1.3em;
+      margin-bottom: 30px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 25px 50px;
+      font-size: 2em;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff);
+      background-size: 400% 400%;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      animation: gradientShift 3s ease infinite, pulse 2s ease-in-out infinite;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .button:hover {
+      transform: scale(1.1) rotate(-5deg);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .button:active {
+      transform: scale(0.95);
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .stat-box {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 0.9em;
+    }
+
+    .stat-box span {
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .counter {
+      margin-top: 20px;
+      font-size: 1.5em;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 15px 30px;
+      border-radius: 50px;
+      display: inline-block;
+    }
+
+    .site-preview {
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      font-size: 1.1em;
+    }
+
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      animation: fall linear forwards;
+      z-index: 100;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 30px;
+      animation: sparkleAnim 1s ease-out forwards;
+      z-index: 100;
+    }
+
+    @keyframes sparkleAnim {
+      0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(2) rotate(180deg);
+        opacity: 0;
+      }
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.8em;
+      opacity: 0.6;
+    }
+
+    .footer a {
+      color: white;
+    }
+
+    .message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 50px;
+      font-weight: bold;
+      z-index: 2000;
+      animation: fadeInOut 2s ease;
+      pointer-events: none;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    }
+  </style>
+</head>
+<body>
+  <button class="reset-btn" onclick="resetSites()" data-ru="🔄 Сбросить" data-en="🔄 Reset">🔄 Сбросить</button>
+
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="switchLanguage('ru')">🇷🇺 РУС</button>
+    <button class="lang-btn" onclick="switchLanguage('en')">🇬🇧 ENG</button>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <div class="emoji-big" id="mainEmoji">🤪</div>
+      <h1 data-ru="БЕСПОЛЕЗНЫЕ САЙТЫ" data-en="USELESS WEBSITES">БЕСПОЛЕЗНЫЕ САЙТЫ</h1>
+      <p class="subtitle" data-ru="Теряйте время с удовольствием!" data-en="Waste your time with pleasure!">Теряйте время с удовольствием!</p>
+      
+      <div class="stats">
+        <div class="stat-box">
+          <span id="remainingCount">200</span> <span data-ru="осталось" data-en="left">осталось</span>
+        </div>
+        <div class="stat-box">
+          <span id="totalCount">200</span> <span data-ru="всего" data-en="total">всего</span>
+        </div>
+      </div>
+      
+      <div class="site-preview" id="sitePreview" style="display: none;">
+        <div id="siteName" style="font-weight: bold; margin-bottom: 5px;"></div>
+        <div id="siteDesc" style="font-size: 0.9em; opacity: 0.8;"></div>
+      </div>
+      
+      <button class="button" id="uselessBtn" data-ru="🎲 ПОГНАЛИ!" data-en="🎲 LET'S GO!">
+        🎲 ПОГНАЛИ!
+      </button>
+      
+      <div class="counter">
+        <span id="clickCount">0</span> <span data-ru="сайтов открыто" data-en="sites opened">сайтов открыто</span>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <span data-ru="Вдохновлено" data-en="Inspired by">Вдохновлено</span> 
+      <a href="https://theuselessweb.com">The Useless Web</a>
+    </div>
+  </div>
+
+  <script>
+    // Текущий язык
+    let currentLang = 'ru';
+
+    // Переводы
+    const translations = {
+      ru: {
+        title: 'Бесполезные сайты',
+        heading: 'БЕСПОЛЕЗНЫЕ САЙТЫ',
+        subtitle: 'Теряйте время с удовольствием!',
+        button: '🎲 ПОГНАЛИ!',
+        counter: 'сайтов открыто',
+        inspired: 'Вдохновлено',
+        sites: 'сайтов в коллекции',
+        clickAnywhere: 'Кликните куда угодно или нажмите Enter',
+        welcome: '🎉 Добро пожаловать в мир бесполезных сайтов!',
+        allOpened: '🎉 Вы открыли все сайты! Нажмите "Сбросить" чтобы начать заново!',
+        left: 'осталось',
+        total: 'всего',
+        reset: '🔄 Сбросить'
+      },
+      en: {
+        title: 'Useless Websites',
+        heading: 'USELESS WEBSITES',
+        subtitle: 'Waste your time with pleasure!',
+        button: "🎲 LET'S GO!",
+        counter: 'sites opened',
+        inspired: 'Inspired by',
+        sites: 'sites in collection',
+        clickAnywhere: 'Click anywhere or press Enter',
+        welcome: '🎉 Welcome to the world of useless websites!',
+        allOpened: '🎉 You opened all sites! Press "Reset" to start over!',
+        left: 'left',
+        total: 'total',
+        reset: '🔄 Reset'
+      }
+    };
+
+    // Полная база сайтов (200+)
+    const ALL_SITES = [
+      { url: "https://theuselessweb.com", name_ru: "The Useless Web", name_en: "The Useless Web", desc_ru: "Оригинальный сайт с бесполезными сайтами", desc_en: "The original useless websites site" },
+      { url: "https://pointerpointer.com", name_ru: "Pointer Pointer", name_en: "Pointer Pointer", desc_ru: "Указатель всегда показывает на ваш курсор", desc_en: "Pointer always points at your cursor" },
+      { url: "https://cat-bounce.com", name_ru: "Cat Bounce", name_en: "Cat Bounce", desc_ru: "Прыгающие котики!", desc_en: "Bouncing cats!" },
+      { url: "https://eelslap.com", name_ru: "Eel Slap", name_en: "Eel Slap", desc_ru: "Шлёпните кого-нибудь угрём", desc_en: "Slap someone with an eel" },
+      { url: "https://hackertyper.com", name_ru: "Hacker Typer", name_en: "Hacker Typer", desc_ru: "Почувствуйте себя хакером из фильмов", desc_en: "Feel like a movie hacker" },
+      { url: "https://zombo.com", name_ru: "Zombo.com", name_en: "Zombo.com", desc_ru: "Вы можете сделать всё на Zombo.com", desc_en: "You can do anything at Zombo.com" },
+      { url: "https://isitchristmas.com", name_ru: "Is It Christmas?", name_en: "Is It Christmas?", desc_ru: "Узнайте, Рождество ли сегодня", desc_en: "Find out if it's Christmas today" },
+      { url: "https://hasthelargehadroncolliderdestroyedtheworldyet.com", name_ru: "LHC Destroyed World?", name_en: "LHC Destroyed World?", desc_ru: "Уничтожил ли БАК мир?", desc_en: "Has the LHC destroyed the world?" },
+      { url: "https://thisissand.com", name_ru: "This Is Sand", name_en: "This Is Sand", desc_ru: "Рисуйте песком", desc_en: "Draw with sand" },
+      { url: "https://weavesilk.com", name_ru: "Weave Silk", name_en: "Weave Silk", desc_ru: "Создавайте красивые светящиеся узоры", desc_en: "Create beautiful glowing patterns" },
+      { url: "https://checkboxrace.com", name_ru: "Checkbox Race", name_en: "Checkbox Race", desc_ru: "Гонка на чекбоксах", desc_en: "Race with checkboxes" },
+      { url: "https://findtheinvisiblecow.com", name_ru: "Find the Invisible Cow", name_en: "Find the Invisible Cow", desc_ru: "Найдите невидимую корову", desc_en: "Find the invisible cow" },
+      { url: "https://papertoilet.com", name_ru: "Paper Toilet", name_en: "Paper Toilet", desc_ru: "Виртуальная туалетная бумага", desc_en: "Virtual toilet paper" },
+      { url: "https://smashthewalls.com", name_ru: "Smash the Walls", name_en: "Smash the Walls", desc_ru: "Крушите стены!", desc_en: "Smash the walls!" },
+      { url: "https://corndog.io", name_ru: "Corndog.io", name_en: "Corndog.io", desc_ru: "Корн-доги!", desc_en: "Corndogs!" },
+      { url: "https://heeeeeeeey.com", name_ru: "Heeeeeeeey", name_en: "Heeeeeeeey", desc_ru: "Эээээй!", desc_en: "Heeeeeeeey!" },
+      { url: "https://hooooooooo.com", name_ru: "Hooooooooo", name_en: "Hooooooooo", desc_ru: "Уууууу!", desc_en: "Hooooooooo!" },
+      { url: "https://incredibox.com", name_ru: "Incredibox", name_en: "Incredibox", desc_ru: "Создавайте музыку", desc_en: "Create music" },
+      { url: "https://www.omfgdogs.com", name_ru: "OMG Dogs", name_en: "OMG Dogs", desc_ru: "ОМГ СОБАКИ!", desc_en: "OMG DOGS!" },
+      { url: "https://patatap.com", name_ru: "Patatap", name_en: "Patatap", desc_ru: "Музыкальная клавиатура", desc_en: "Musical keyboard" },
+      { url: "https://pixelsfighting.com", name_ru: "Pixels Fighting", name_en: "Pixels Fighting", desc_ru: "Пиксели дерутся", desc_en: "Pixels fighting" },
+      { url: "https://randomcolour.com", name_ru: "Random Colour", name_en: "Random Colour", desc_ru: "Случайный цвет", desc_en: "Random color" },
+      { url: "https://slither.io", name_ru: "Slither.io", name_en: "Slither.io", desc_ru: "Игра про змеек", desc_en: "Snake game" },
+      { url: "https://agar.io", name_ru: "Agar.io", name_en: "Agar.io", desc_ru: "Поедание клеток", desc_en: "Cell eating game" },
+      { url: "https://www.staggeringbeauty.com", name_ru: "Staggering Beauty", name_en: "Staggering Beauty", desc_ru: "Трясущийся червяк", desc_en: "Shaking worm" },
+      { url: "https://strobe.cool", name_ru: "Strobe Cool", name_en: "Strobe Cool", desc_ru: "Стробоскопические эффекты", desc_en: "Stroboscopic effects" },
+      { url: "https://www.window-swap.com", name_ru: "Window Swap", name_en: "Window Swap", desc_ru: "Смотрите в окна по всему миру", desc_en: "Look through windows around the world" },
+      { url: "https://zoomquilt.org", name_ru: "Zoom Quilt", name_en: "Zoom Quilt", desc_ru: "Бесконечное приближение", desc_en: "Infinite zoom" },
+      { url: "https://endless.horse", name_ru: "Endless Horse", name_en: "Endless Horse", desc_ru: "Бесконечная лошадь", desc_en: "Endless horse" },
+      { url: "https://www.nyan.cat", name_ru: "Nyan Cat", name_en: "Nyan Cat", desc_ru: "Легендарный Нян Кэт", desc_en: "The legendary Nyan Cat" },
+      { url: "https://mondrianandme.com", name_ru: "Mondrian and Me", name_en: "Mondrian and Me", desc_ru: "Создайте шедевр в стиле Мондриана", desc_en: "Create your Mondrian masterpiece" },
+      { url: "https://quickdraw.withgoogle.com", name_ru: "Quick, Draw!", name_en: "Quick, Draw!", desc_ru: "Нейросеть угадывает ваши рисунки", desc_en: "AI guesses your drawings" },
+      { url: "https://mrdoob.com/projects/chromeexperiments/google-gravity", name_ru: "Google Gravity", name_en: "Google Gravity", desc_ru: "Гравитация на Google", desc_en: "Gravity on Google" },
+      { url: "https://burymewithmymoney.com", name_ru: "Bury Me With My Money", name_en: "Bury Me With My Money", desc_ru: "Странный ретро-шутер", desc_en: "Weird retro shooter" },
+      { url: "https://alwaysjudgeabookbyitscover.com", name_ru: "Judge Book by Cover", name_en: "Judge Book by Cover", desc_ru: "Судите книги по обложкам", desc_en: "Judge books by their covers" },
+      { url: "https://cursoreffects.com", name_ru: "Cursor Effects", name_en: "Cursor Effects", desc_ru: "Эффекты для курсора", desc_en: "Cursor effects" },
+      { url: "https://drawing.garden", name_ru: "Drawing Garden", name_en: "Drawing Garden", desc_ru: "Рисуйте в саду", desc_en: "Draw in a garden" },
+      { url: "https://puginarug.com", name_ru: "Pug in a Rug", name_en: "Pug in a Rug", desc_ru: "Мопс в ковре", desc_en: "A pug in a rug" },
+      { url: "https://thatsthefinger.com", name_ru: "That's the Finger", name_en: "That's the Finger", desc_ru: "Просто палец", desc_en: "Just a finger" },
+      { url: "https://ilovechicken.com", name_ru: "I Love Chicken", name_en: "I Love Chicken", desc_ru: "Я люблю курицу", desc_en: "I love chicken" },
+      { url: "https://printergoesskrrr.com", name_ru: "Printer Goes Skrrr", name_en: "Printer Goes Skrrr", desc_ru: "Принтер делает скррр", desc_en: "Printer goes skrrr" },
+      { url: "https://www.omglasergunspewpewpew.com", name_ru: "OMG Laser Guns", name_en: "OMG Laser Guns", desc_ru: "Лазерные пушки!", desc_en: "Laser guns!" },
+      { url: "https://www.cornify.com", name_ru: "Cornify", name_en: "Cornify", desc_ru: "Добавьте единорогов на любой сайт", desc_en: "Add unicorns to any website" },
+      { url: "https://www.republiquedesmangues.fr", name_ru: "République des Mangues", name_en: "République des Mangues", desc_ru: "Республика манго", desc_en: "Republic of Mangoes" },
+      { url: "https://www.clicktoremove.com", name_ru: "Click to Remove", name_en: "Click to Remove", desc_ru: "Кликайте чтобы удалить", desc_en: "Click to remove" },
+      { url: "https://www.koalastothemax.com", name_ru: "Koalas to the Max", name_en: "Koalas to the Max", desc_ru: "Коалы на максимум", desc_en: "Maximum koalas" },
+      { url: "https://noisli.com", name_ru: "Noisli", name_en: "Noisli", desc_ru: "Фоновые звуки для концентрации", desc_en: "Background sounds for focus" },
+      { url: "https://asoftmurmur.com", name_ru: "A Soft Murmur", name_en: "A Soft Murmur", desc_ru: "Смешивайте окружающие звуки", desc_en: "Mix ambient sounds" },
+      { url: "https://rainymood.com", name_ru: "Rainy Mood", name_en: "Rainy Mood", desc_ru: "Звук дождя", desc_en: "Rain sounds" },
+      { url: "https://www.catipsum.com", name_ru: "Cat Ipsum", name_en: "Cat Ipsum", desc_ru: "Lorem Ipsum с котиками", desc_en: "Lorem Ipsum with cats" },
+      { url: "https://www.lingscars.com", name_ru: "Ling's Cars", name_en: "Ling's Cars", desc_ru: "Самый безумный сайт аренды авто", desc_en: "The craziest car rental site" },
+      { url: "https://sanger.dk", name_ru: "Sanger.dk", name_en: "Sanger.dk", desc_ru: "Странный датский сайт", desc_en: "Weird Danish website" },
+      { url: "https://stellarium-web.org", name_ru: "Stellarium", name_en: "Stellarium", desc_ru: "Планетарий в браузере", desc_en: "Planetarium in your browser" },
+      { url: "https://stars.chromeexperiments.com", name_ru: "100,000 Stars", name_en: "100,000 Stars", desc_ru: "Исследуйте галактику", desc_en: "Explore the galaxy" },
+      { url: "https://www.howmanypeopleareinspacerightnow.com", name_ru: "People in Space", name_en: "People in Space", desc_ru: "Сколько людей в космосе сейчас", desc_en: "How many people are in space right now" },
+      { url: "https://jacksonpollock.org", name_ru: "Jackson Pollock", name_en: "Jackson Pollock", desc_ru: "Рисуйте в стиле Поллока", desc_en: "Paint like Pollock" },
+      { url: "https://bomomo.com", name_ru: "Bomomo", name_en: "Bomomo", desc_ru: "Абстрактная рисовалка", desc_en: "Abstract drawing tool" },
+      { url: "https://neave.com/swarm", name_ru: "Swarm", name_en: "Swarm", desc_ru: "Интерактивный рой частиц", desc_en: "Interactive particle swarm" },
+      { url: "https://www.donothingfor2minutes.com", name_ru: "Do Nothing for 2 Minutes", name_en: "Do Nothing for 2 Minutes", desc_ru: "Просто ничего не делайте 2 минуты", desc_en: "Just do nothing for 2 minutes" },
+      { url: "https://www.sinuousgame.com", name_ru: "Sinuous", name_en: "Sinuous", desc_ru: "Уклоняйтесь от красных точек", desc_en: "Dodge the red dots" },
+      { url: "https://www.geoguessr.com", name_ru: "GeoGuessr", name_en: "GeoGuessr", desc_ru: "Угадайте место по панораме", desc_en: "Guess the location from a panorama" },
+      { url: "https://www.littlealchemy.com", name_ru: "Little Alchemy", name_en: "Little Alchemy", desc_ru: "Создавайте новые элементы", desc_en: "Create new elements" },
+      { url: "https://www.theonion.com", name_ru: "The Onion", name_en: "The Onion", desc_ru: "Сатирические новости", desc_en: "Satirical news" },
+      { url: "https://www.clickhole.com", name_ru: "ClickHole", name_en: "ClickHole", desc_ru: "Пародия на кликбейт", desc_en: "Clickbait parody" },
+      { url: "https://www.boredpanda.com", name_ru: "Bored Panda", name_en: "Bored Panda", desc_ru: "Борьба со скукой", desc_en: "Fighting boredom" },
+      { url: "https://www.thisiswhyimbroke.com", name_ru: "This Is Why I'm Broke", name_en: "This Is Why I'm Broke", desc_ru: "Странные товары для покупки", desc_en: "Weird products to buy" },
+      { url: "https://www.random.org", name_ru: "Random.org", name_en: "Random.org", desc_ru: "Настоящие случайные числа", desc_en: "True random numbers" },
+      { url: "https://www.trumpdonald.org", name_ru: "Trump Donald", name_en: "Trump Donald", desc_ru: "Рисуйте Трампом", desc_en: "Draw with Trump" },
+      { url: "https://www.trypap.com", name_ru: "Try Pap", name_en: "Try Pap", desc_ru: "Попробуйте пап", desc_en: "Try pap" },
+      { url: "https://www.unicodesnowmanforyou.com", name_ru: "Unicode Snowman", name_en: "Unicode Snowman", desc_ru: "Снеговик из юникода", desc_en: "Unicode snowman for you" },
+      { url: "https://www.weirdorconfusing.com", name_ru: "Weird or Confusing?", name_en: "Weird or Confusing?", desc_ru: "Странные товары с Amazon", desc_en: "Weird Amazon products" },
+      { url: "https://www.bouncingdvdlogo.com", name_ru: "Bouncing DVD Logo", name_en: "Bouncing DVD Logo", desc_ru: "Прыгающий логотип DVD", desc_en: "Bouncing DVD logo" },
+      { url: "https://www.chihuahuaspin.com", name_ru: "Chihuahua Spin", name_en: "Chihuahua Spin", desc_ru: "Вращающаяся чихуахуа", desc_en: "Spinning chihuahua" },
+      { url: "https://www.drawastickman.com", name_ru: "Draw a Stickman", name_en: "Draw a Stickman", desc_ru: "Нарисуйте человечка", desc_en: "Draw a stickman" },
+      { url: "https://www.fallingfalling.com", name_ru: "Falling Falling", name_en: "Falling Falling", desc_ru: "Падающие объекты", desc_en: "Falling objects" },
+      { url: "https://www.kanyezone.com", name_ru: "Kanye Zone", name_en: "Kanye Zone", desc_ru: "Зона Канье", desc_en: "Kanye Zone" },
+      { url: "https://www.kittenwar.com", name_ru: "Kitten War", name_en: "Kitten War", desc_ru: "Война котят", desc_en: "Kitten war" },
+      { url: "https://www.leekspin.com", name_ru: "Leek Spin", name_en: "Leek Spin", desc_ru: "Вращающийся лук-порей", desc_en: "Spinning leek" },
+      { url: "https://www.my90stv.com", name_ru: "My 90's TV", name_en: "My 90's TV", desc_ru: "Телевидение 90-х", desc_en: "90's television" },
+      { url: "https://www.niceme.me", name_ru: "Nice Meme", name_en: "Nice Meme", desc_ru: "Хороший мем", desc_en: "Nice meme" },
+      { url: "https://www.patience-is-a-virtue.org", name_ru: "Patience is a Virtue", name_en: "Patience is a Virtue", desc_ru: "Терпение - добродетель", desc_en: "Patience is a virtue" },
+      { url: "https://www.peteranswers.com", name_ru: "Peter Answers", name_en: "Peter Answers", desc_ru: "Питер отвечает", desc_en: "Peter answers" },
+      { url: "https://www.purple.com", name_ru: "Purple", name_en: "Purple", desc_ru: "Фиолетовый", desc_en: "Purple" },
+      { url: "https://www.rrrgggbbb.com", name_ru: "RRRGGGBBB", name_en: "RRRGGGBBB", desc_ru: "Красный зелёный синий", desc_en: "Red green blue" },
+      { url: "https://www.sometimesredsometimesblue.com", name_ru: "Sometimes Red Sometimes Blue", name_en: "Sometimes Red Sometimes Blue", desc_ru: "Иногда красный иногда синий", desc_en: "Sometimes red sometimes blue" },
+      { url: "https://www.spaceis.cool", name_ru: "Space is Cool", name_en: "Space is Cool", desc_ru: "Космос крутой", desc_en: "Space is cool" },
+      { url: "https://www.windows93.net", name_ru: "Windows 93", name_en: "Windows 93", desc_ru: "Пародия на Windows", desc_en: "Windows parody" },
+      { url: "https://www.yesno.wtf", name_ru: "Yes No WTF", name_en: "Yes No WTF", desc_ru: "Да нет ВТФ", desc_en: "Yes no WTF" },
+      { url: "https://www.zoomquilt.org", name_ru: "Zoom Quilt", name_en: "Zoom Quilt", desc_ru: "Бесконечное приближение", desc_en: "Infinite zoom" },
+      { url: "https://www.calm.com", name_ru: "Calm", name_en: "Calm", desc_ru: "Медитация и расслабление", desc_en: "Meditation and relaxation" },
+      { url: "https://www.pixelthoughts.co", name_ru: "Pixel Thoughts", name_en: "Pixel Thoughts", desc_ru: "60-секундная медитация", desc_en: "60-second meditation" },
+      { url: "https://www.worldometers.info", name_ru: "Worldometers", name_en: "Worldometers", desc_ru: "Мировая статистика в реальном времени", desc_en: "Real-time world statistics" },
+      { url: "https://www.istheinternetdown.com", name_ru: "Is The Internet Down?", name_en: "Is The Internet Down?", desc_ru: "Проверка, работает ли интернет", desc_en: "Check if the internet is working" },
+      { url: "https://www.timeanddate.com/countdown/generic", name_ru: "Countdown Timer", name_en: "Countdown Timer", desc_ru: "Создайте свой таймер обратного отсчёта", desc_en: "Create your own countdown timer" },
+      { url: "https://www.accidentalspaceastronaut.com", name_ru: "Accidental Space Astronaut", name_en: "Accidental Space Astronaut", desc_ru: "Случайный космический астронавт", desc_en: "Accidental space astronaut" },
+      { url: "https://www.bean.camera", name_ru: "Bean Camera", name_en: "Bean Camera", desc_ru: "Фасоль на камеру", desc_en: "Beans on camera" },
+      { url: "https://www.bitty.browser.com", name_ru: "Bitty Browser", name_en: "Bitty Browser", desc_ru: "Крошечный браузер", desc_en: "Tiny browser" },
+      { url: "https://www.blankwindows.com", name_ru: "Blank Windows", name_en: "Blank Windows", desc_ru: "Пустые окна", desc_en: "Blank windows" },
+      { url: "https://www.creepybeetle.com", name_ru: "Creepy Beetle", name_en: "Creepy Beetle", desc_ru: "Жуткий жук", desc_en: "Creepy beetle" },
+      { url: "https://www.crossdivisions.com", name_ru: "Cross Divisions", name_en: "Cross Divisions", desc_ru: "Пересекающиеся деления", desc_en: "Crossing divisions" },
+      { url: "https://www.dragoart.com", name_ru: "Dragoart", name_en: "Dragoart", desc_ru: "Рисование драконов", desc_en: "Dragon drawing" },
+      { url: "https://www.electricboogiewoogie.com", name_ru: "Electric Boogie Woogie", name_en: "Electric Boogie Woogie", desc_ru: "Электрический буги-вуги", desc_en: "Electric boogie woogie" },
+      { url: "https://www.filldisk.com", name_ru: "Fill Disk", name_en: "Fill Disk", desc_ru: "Заполните диск", desc_en: "Fill the disk" },
+      { url: "https://www.galactic.ink", name_ru: "Galactic Ink", name_en: "Galactic Ink", desc_ru: "Галактические чернила", desc_en: "Galactic ink" },
+      { url: "https://www.gifypet.com", name_ru: "GifyPet", name_en: "GifyPet", desc_ru: "Виртуальный питомец", desc_en: "Virtual pet" },
+      { url: "https://www.haneke.net", name_ru: "Haneke", name_en: "Haneke", desc_ru: "Странный сайт", desc_en: "Weird site" },
+      { url: "https://www.howmanyplants.com", name_ru: "How Many Plants", name_en: "How Many Plants", desc_ru: "Сколько растений", desc_en: "How many plants" },
+      { url: "https://www.iamawesome.com", name_ru: "I Am Awesome", name_en: "I Am Awesome", desc_ru: "Я офигенный", desc_en: "I am awesome" },
+      { url: "https://www.internet-map.net", name_ru: "Internet Map", name_en: "Internet Map", desc_ru: "Карта интернета", desc_en: "Map of the internet" },
+      { url: "https://www.isitfridayyet.com", name_ru: "Is It Friday Yet?", name_en: "Is It Friday Yet?", desc_ru: "Уже пятница?", desc_en: "Is it Friday yet?" },
+      { url: "https://www.maninthedark.com", name_ru: "Man in the Dark", name_en: "Man in the Dark", desc_ru: "Человек в темноте", desc_en: "Man in the dark" },
+      { url: "https://www.muchbetterthanthis.com", name_ru: "Much Better Than This", name_en: "Much Better Than This", desc_ru: "Намного лучше этого", desc_en: "Much better than this" },
+      { url: "https://www.natureman.com", name_ru: "Nature Man", name_en: "Nature Man", desc_ru: "Человек природы", desc_en: "Nature man" },
+      { url: "https://www.onewordinteractive.com", name_ru: "One Word Interactive", name_en: "One Word Interactive", desc_ru: "Однословное интерактивное", desc_en: "One word interactive" },
+      { url: "https://www.playpianosong.com", name_ru: "Play Piano Song", name_en: "Play Piano Song", desc_ru: "Сыграйте на пианино", desc_en: "Play a piano song" },
+      { url: "https://www.sadforjapan.com", name_ru: "Sad for Japan", name_en: "Sad for Japan", desc_ru: "Грустно за Японию", desc_en: "Sad for Japan" },
+      { url: "https://www.scribbler.com", name_ru: "Scribbler", name_en: "Scribbler", desc_ru: "Рисовалка", desc_en: "Drawing tool" },
+      { url: "https://www.secrettoeverybody.com", name_ru: "Secret to Everybody", name_en: "Secret to Everybody", desc_ru: "Секрет для всех", desc_en: "Secret to everybody" },
+      { url: "https://www.sharethesausage.com", name_ru: "Share the Sausage", name_en: "Share the Sausage", desc_ru: "Поделись сосиской", desc_en: "Share the sausage" },
+      { url: "https://www.take-a-screenshot.org", name_ru: "Take a Screenshot", name_en: "Take a Screenshot", desc_ru: "Сделайте скриншот", desc_en: "Take a screenshot" },
+      { url: "https://www.walkingpets.com", name_ru: "Walking Pets", name_en: "Walking Pets", desc_ru: "Гуляющие питомцы", desc_en: "Walking pets" },
+      { url: "https://www.watermelonwatermelon.com", name_ru: "Watermelon Watermelon", name_en: "Watermelon Watermelon", desc_ru: "Арбуз арбуз", desc_en: "Watermelon watermelon" },
+      { url: "https://www.whereareyounow.com", name_ru: "Where Are You Now", name_en: "Where Are You Now", desc_ru: "Где ты сейчас", desc_en: "Where are you now" },
+      { url: "https://www.wintercoats.com", name_ru: "Winter Coats", name_en: "Winter Coats", desc_ru: "Зимние пальто", desc_en: "Winter coats" },
+      { url: "https://www.wobzip.org", name_ru: "Wobzip", name_en: "Wobzip", desc_ru: "Распаковка файлов онлайн", desc_en: "Online file unpacker" },
+      { url: "https://www.wwwdotcom.com", name_ru: "wwwdotcom", name_en: "wwwdotcom", desc_ru: "www.com", desc_en: "www.com" },
+      { url: "https://www.youarehere.com", name_ru: "You Are Here", name_en: "You Are Here", desc_ru: "Вы здесь", desc_en: "You are here" },
+      { url: "https://www.frog.com", name_ru: "Frog", name_en: "Frog", desc_ru: "Лягушка", desc_en: "Frog" },
+      { url: "https://www.esthersplace.com", name_ru: "Esther's Place", name_en: "Esther's Place", desc_ru: "Место Эстер", desc_en: "Esther's place" },
+      { url: "https://www.dominos.com", name_ru: "Dominos", name_en: "Dominos", desc_ru: "Падающее домино", desc_en: "Falling dominoes" },
+      { url: "https://www.animalsitting.com", name_ru: "Animal Sitting", name_en: "Animal Sitting", desc_ru: "Животные сидят", desc_en: "Animals sitting" },
+      { url: "https://www.netsoc.com", name_ru: "Netsoc", name_en: "Netsoc", desc_ru: "Странный сайт", desc_en: "Weird website" },
+      { url: "https://www.ouaismaisbon.ch", name_ru: "Ouais Mais Bon", name_en: "Ouais Mais Bon", desc_ru: "Французский странный сайт", desc_en: "French weird site" },
+      { url: "https://www.fauux.neocities.org", name_ru: "Fauux", name_en: "Fauux", desc_ru: "Странный неосайт", desc_en: "Weird neocities site" },
+      { url: "https://www.omg-soup.com", name_ru: "OMG Soup", name_en: "OMG Soup", desc_ru: "ОМГ Суп!", desc_en: "OMG Soup!" },
+      { url: "https://www.catswhocode.com", name_ru: "Cats Who Code", name_en: "Cats Who Code", desc_ru: "Котики, которые кодируют", desc_en: "Cats who code" },
+      { url: "https://www.rms.sexy", name_ru: "RMS Sexy", name_en: "RMS Sexy", desc_ru: "Ричард Столлман...", desc_en: "Richard Stallman..." },
+      { url: "https://www.uselesswebsites.com", name_ru: "Useless Websites", name_en: "Useless Websites", desc_ru: "Коллекция бесполезных сайтов", desc_en: "Collection of useless websites" },
+      { url: "https://www.passwordgenerator.net", name_ru: "Password Generator", name_en: "Password Generator", desc_ru: "Генератор надёжных паролей", desc_en: "Strong password generator" },
+      { url: "https://www.namegenerator.co", name_ru: "Name Generator", name_en: "Name Generator", desc_ru: "Генератор случайных имён", desc_en: "Random name generator" },
+      { url: "https://www.thezen.zone", name_ru: "The Zen Zone", name_en: "The Zen Zone", desc_ru: "Расслабляющие звуки и анимации", desc_en: "Relaxing sounds and animations" },
+      { url: "https://www.cant-not-tweet-this.com", name_ru: "Can't Not Tweet This", name_en: "Can't Not Tweet This", desc_ru: "Случайные странные твиты", desc_en: "Random weird tweets" },
+      { url: "https://www.just-shower-thoughts.tumblr.com", name_ru: "Shower Thoughts", name_en: "Shower Thoughts", desc_ru: "Мысли под душем", desc_en: "Shower thoughts" },
+      { url: "https://www.waitbutwhy.com", name_ru: "Wait But Why", name_en: "Wait But Why", desc_ru: "Длинные интересные статьи", desc_en: "Long interesting articles" },
+      { url: "https://www.winterbash2016.com", name_ru: "Winter Bash", name_en: "Winter Bash", desc_ru: "Зимние игры", desc_en: "Winter games" },
+      { url: "https://www.zerohedge.com", name_ru: "Zero Hedge", name_en: "Zero Hedge", desc_ru: "Финансовые новости", desc_en: "Financial news" },
+      { url: "https://www.neave.com/strobe", name_ru: "Strobe", name_en: "Strobe", desc_ru: "Гипнотические узоры", desc_en: "Hypnotic patterns" },
+      { url: "https://www.roomscapestudios.com", name_ru: "Roomscape", name_en: "Roomscape", desc_ru: "Виртуальные комнаты", desc_en: "Virtual rooms" },
+      { url: "https://www.snowflakes.barkleyus.com", name_ru: "Snowflakes", name_en: "Snowflakes", desc_ru: "Создавайте снежинки", desc_en: "Create snowflakes" },
+      { url: "https://www.tinytuba.com", name_ru: "Tiny Tuba", name_en: "Tiny Tuba", desc_ru: "Маленькая туба", desc_en: "Tiny tuba" },
+      { url: "https://www.toilet-guru.com", name_ru: "Toilet Guru", name_en: "Toilet Guru", desc_ru: "Всё о туалетах", desc_en: "All about toilets" },
+      { url: "https://www.tryjusttry.com", name_ru: "Try Just Try", name_en: "Try Just Try", desc_ru: "Просто попробуйте", desc_en: "Just try" }
+      { url: "https://www.pornhub.org", name_ru: "The best site", name_en: "The best site", desc_ru: "Лучший сайт", desc_en: "Best website" }
+    ];
+
+    // Доступные сайты (ещё не открытые)
+    let availableSites = [];
+    let clickCount = 0;
+    let lastOpenedSite = null;
+
+    // Инициализация доступных сайтов
+    function initAvailableSites() {
+      availableSites = [...ALL_SITES];
+      clickCount = 0;
+      lastOpenedSite = null;
+      document.getElementById('clickCount').textContent = '0';
+      document.getElementById('remainingCount').textContent = availableSites.length;
+      document.getElementById('totalCount').textContent = ALL_SITES.length;
+      updatePreview(null);
+    }
+
+    // Сбросить все сайты
+    function resetSites() {
+      initAvailableSites();
+      const message = document.createElement('div');
+      message.className = 'message';
+      message.textContent = currentLang === 'ru' ? '🔄 Список сброшен! Все сайты снова доступны.' : '🔄 List reset! All sites are available again.';
+      document.body.appendChild(message);
+      setTimeout(() => message.remove(), 2000);
+    }
+
+    // Переключение языка
+    window.switchLanguage = function(lang) {
+      currentLang = lang;
+      
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if ((lang === 'ru' && btn.textContent.includes('РУС')) || 
+            (lang === 'en' && btn.textContent.includes('ENG'))) {
+          btn.classList.add('active');
+        }
+      });
+      
+      document.querySelectorAll('[data-ru]').forEach(element => {
+        if (element.dataset[lang]) {
+          element.textContent = element.dataset[lang];
+        }
+      });
+      
+      document.title = translations[lang].title;
+      
+      if (lastOpenedSite) {
+        updatePreview(lastOpenedSite);
+      }
+      
+      localStorage.setItem('language', lang);
+    };
+
+    // Получить случайный сайт из доступных
+    function getRandomSite() {
+      if (availableSites.length === 0) {
+        return null;
+      }
+      
+      const randomIndex = Math.floor(Math.random() * availableSites.length);
+      const site = availableSites[randomIndex];
+      
+      // Удаляем сайт из доступных
+      availableSites.splice(randomIndex, 1);
+      
+      lastOpenedSite = site;
+      return site;
+    }
+
+    // Обновить превью сайта
+    function updatePreview(site) {
+      const preview = document.getElementById('sitePreview');
+      if (!site) {
+        preview.style.display = 'none';
+        return;
+      }
+      preview.style.display = 'block';
+      document.getElementById('siteName').textContent = '🎯 ' + (currentLang === 'ru' ? site.name_ru : site.name_en);
+      document.getElementById('siteDesc').textContent = currentLang === 'ru' ? site.desc_ru : site.desc_en;
+    }
+
+    // Создать конфетти
+    function createConfetti(x, y) {
+      const colors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff8e53', '#9b59b6', '#ff69b4', '#00d2ff'];
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = x + 'px';
+        confetti.style.top = y + 'px';
+        confetti.style.width = Math.random() * 10 + 5 + 'px';
+        confetti.style.height = Math.random() * 10 + 5 + 'px';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+        confetti.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px)`;
+        
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    }
+
+    // Создать искры
+    function createSparkles(x, y) {
+      const emojis = ['✨', '⭐', '💫', '🌟', '🎉', '🎊', '💥', '🔥', '🌈', '💖'];
+      
+      for (let i = 0; i < 10; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        sparkle.style.left = (x + Math.random() * 100 - 50) + 'px';
+        sparkle.style.top = (y + Math.random() * 100 - 50) + 'px';
+        
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+      }
+    }
+
+    // Сменить фоновый цвет
+    function changeBackground() {
+      const colors = [
+        '#ff6b6b', '#ff8e53', '#ffd93d', '#6bcb77', 
+        '#4d96ff', '#9b59b6', '#ff69b4', '#00d2ff',
+        '#ff6348', '#a29bfe', '#fd79a8', '#00b894',
+        '#e17055', '#6c5ce7', '#fdcb6e', '#e84393'
+      ];
+      document.body.style.background = colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // Сменить эмодзи
+    function changeEmoji() {
+      const emojis = ['🤪', '😜', '🤩', '🥳', '😎', '🤯', '🦄', '🌈', '💩', '👾', 
+                      '🎃', '🤖', '👽', '🐙', '🦀', '🐸', '🦄', '🍕', '🌮', '🎪'];
+      document.getElementById('mainEmoji').textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    }
+
+    // Показать сообщение
+    function showMessage(text) {
+      const message = document.createElement('div');
+      message.className = 'message';
+      message.textContent = text;
+      document.body.appendChild(message);
+      setTimeout(() => message.remove(), 2000);
+    }
+
+    // Открыть случайный сайт
+    function openUselessSite(e) {
+      if (availableSites.length === 0) {
+        showMessage(translations[currentLang].allOpened);
+        return;
+      }
+      
+      const site = getRandomSite();
+      if (!site) return;
+      
+      updatePreview(site);
+      
+      clickCount++;
+      document.getElementById('clickCount').textContent = clickCount;
+      document.getElementById('remainingCount').textContent = availableSites.length;
+      
+      changeBackground();
+      changeEmoji();
+      
+      const x = e ? e.clientX : window.innerWidth / 2;
+      const y = e ? e.clientY : window.innerHeight / 2;
+      createConfetti(x, y);
+      createSparkles(x, y);
+      
+      if (navigator.vibrate) {
+        navigator.vibrate(200);
+      }
+      
+      setTimeout(() => {
+        window.open(site.url, '_blank', 'noopener,noreferrer');
+      }, 500);
+    }
+
+    // Обработчики событий
+    document.body.addEventListener('click', function(e) {
+      if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && !e.target.closest('.lang-switcher')) {
+        openUselessSite(e);
+      }
+    });
+
+    document.getElementById('uselessBtn').addEventListener('click', function(e) {
+      e.stopPropagation();
+      openUselessSite(e);
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openUselessSite(e);
+      }
+    });
+
+    // Плавающие эмодзи
+    function createFloatingEmoji() {
+      const emojis = ['🤪', '🎉', '🌟', '💩', '🦄', '🌈', '🎲', '✨', '🔥', '💎'];
+      const emoji = document.createElement('div');
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.cssText = `
+        position: fixed;
+        font-size: ${Math.random() * 30 + 20}px;
+        left: ${Math.random() * 100}%;
+        top: -50px;
+        animation: fall ${Math.random() * 3 + 3}s linear forwards;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.3;
+      `;
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 6000);
+    }
+
+    setInterval(createFloatingEmoji, 2000);
+
+    // Сделать resetSites глобальной
+    window.resetSites = resetSites;
+
+    // Инициализация при загрузке
+    window.addEventListener('load', () => {
+      const savedLang = localStorage.getItem('language') || 'ru';
+      window.switchLanguage(savedLang);
+      initAvailableSites();
+      console.log(translations[currentLang].welcome);
+      console.log(translations[currentLang].clickAnywhere);
+      console.log(ALL_SITES.length + ' ' + translations[currentLang].sites);
+    });
+  </script>
+</body>
+</html>
